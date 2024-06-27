@@ -2,7 +2,8 @@
 <configuration debug="false" scan="true" scanPeriod="1 seconds">
 
     <contextName>logback</contextName>
-    <property name="log.path" value="/data/applogs/xxl-job/xxl-job-admin.log"/>
+    <springProperty scope="context" name="logPath" source="logging.file.path" />
+    <property name="log.path" value="${logPath}/xxl-job-admin.log"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -14,6 +15,7 @@
         <file>${log.path}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <MaxHistory>7</MaxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
